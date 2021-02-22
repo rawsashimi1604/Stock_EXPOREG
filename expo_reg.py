@@ -8,7 +8,7 @@ import datetime
 class ExpoReg:
     def __init__(self):
         pass
-    
+
     def reg_stock(self, stock_ticker, period_years=1, show_plot=False):
         # Define ticker
         ticker = f'{stock_ticker}'
@@ -83,9 +83,8 @@ class ExpoReg:
         score_val = round(((1 + gradient)**250 * r_squared) * 250, 2)
 
 
-        print(f'''
-    {ticker} Exponential Regression - RSquared : {r_squared}, Score : {score_val}
-    ---
+        print(f'''{ticker} Exponential Regression - RSquared : {r_squared}, Score : {score_val}
+---
             ''')
 
         # Add text of r squared, and gradient on plot, change font size to fit the plot.

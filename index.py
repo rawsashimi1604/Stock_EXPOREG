@@ -12,7 +12,13 @@ class IndexReg:
         self.regtype = regtype
 
     def get_list(self, components_dir, years=1, export_format="csv"):
-
+        print('''
+---
+Initializing Regression Ranking System...
+    # made by rawsashimi1604 #
+Uses Andreas Clenow's Exponential Regression System to rank stocks by price momentum.
+---
+        ''')
         with open(f'{components_dir}', 'r') as f:
 
             if self.regtype == "ExpoReg":
@@ -46,18 +52,18 @@ class IndexReg:
                         score.append(score_val)
                     except AttributeError:
                         # If ticker still cannot be found, drop the ticker and continue with next line of code.
-                        df.drop(f'{ticker}')
+                        df = df.drop(f'{ticker}')
                         print(f'{ticker}"s data cannot be accessed from yfinance library. Shall remove from dataframe now')
                         removed.append(ticker)
+
+            # Print out list of tickers that are removed
+            print(f'''List of tickers that are removed \nErrorList = {removed}''')
 
             # Add new column "Score" to dataframe
             df['Score'] = score
 
             # Sort dataframe by score
             df = df.sort_values('Score', ascending=False)
-
-            # Print out list of tickers that are removed
-            print(f'''List of tickers that are removed \nErrorList = {removed}''')
 
             # Get Date today for file naming
             today = datetime.datetime.today().strftime("%d-%m-20%y")
@@ -75,9 +81,3 @@ class IndexReg:
 Sample of csv file:
         ''')
             print(df)
-
-index = IndexReg("ExpoReg")
-index.get_list(components_dir=r'C:\Users\Gavin\Desktop\Stock_EXPOREG\S&P500 Components.csv')
-
-# lin = LinReg()
-# lin.reg_stock(stock_ticker="MSFT", show_plot=True)
